@@ -1,0 +1,49 @@
+<!-- tambola.html -->
+{% include 'header.html' %}
+
+<body class="bg-dark text-light">
+    <div class="container mt-5">
+        <form method="post" action="{% url 'tambola' %}" class="mb-4">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="min_range" class="form-label text-primary" style="font-size: 1.2em;">Min Range:</label>
+                <input type="number" name="min_range" value="{{ min_range }}" class="form-control" required style="font-size: 1.2em;">
+            </div>
+
+            <div class="mb-3">
+                <label for="max_range" class="form-label text-primary" style="font-size: 1.2em;">Max Range:</label>
+                <input type="number" name="max_range" value="{{ max_range }}" class="form-control" required style="font-size: 1.2em;">
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="font-size: 1.2em;">Set Range</button>
+        </form>
+
+        <h2 class="mb-3" style="font-size: 1.5em;">Generated Numbers:</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered border-primary table-dark text-light" style="font-size: 1.5em;">
+                <thead>
+                    <tr>
+                        <th scope="col">Generated Numbers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            {% for number in generated_numbers %}
+                                {{ number }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <form method="post" action="{% url 'generate_number' %}" class="mb-4">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success" style="font-size: 1.2em;">Generate Number</button>
+        </form>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>
